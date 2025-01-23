@@ -7,14 +7,14 @@ with open("requirements.txt", "r", encoding="utf-8") as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="pyninjagithub",
+    name="dscoder",
     version="0.1.0",
-    author="Your Name",
-    author_email="your.email@example.com",
-    description="AI Code Generation Agent",
+    author="José Lopes",
+    author_email="evandeilton@example.com",
+    description="dscoder - AI Code Generation Agent For Data Science Programming",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/PyNinjaGitHub",
+    url="https://github.com/evandeilton/dscoder",
     packages=find_packages(),
     install_requires=requirements,
     classifiers=[
@@ -25,7 +25,7 @@ setup(
     python_requires=">=3.8",
     entry_points={
         "console_scripts": [
-            "pyninjagithub=agent:main",
+            "dscoder=agent:main",
         ],
     },
 )
