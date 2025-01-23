@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)]()
-[![Build Status](https://img.shields.io/travis/evandeilton/dscoder)]()
+<!-- [![Build Status](https://img.shields.io/travis/evandeilton/dscoder)]() -->
 [![Coverage Status](https://coveralls.io/repos/github/evandeilton/dscoder/badge.svg)]()
 
 dscoder is a Python-based AI agent specialized in generating high-quality code across multiple programming languages. The agent supports Python, C++, R, Julia, and Rcpp, leveraging advanced language models to assist in code generation tasks.
@@ -59,16 +59,16 @@ dscoder is a Python-based AI agent specialized in generating high-quality code a
 
 ### Python
 ```python
-from dscoder import AgenteIA
+from dscoder import Dscoder
 
 # Initialize the agent
-agent = AgenteIA(provider="openai")
+agent = Dscoder(provider="openai")
 
 # Generate code with error handling
 try:
-    generated_code = agent.gerar_codigo(
-        descricao="Create a Python function to calculate Fibonacci sequence",
-        linguagem="python"
+    generated_code = agent.generate_code(
+        description="Create a Python function to calculate Fibonacci sequence",
+        language="python"
     )
     print(generated_code)
 except Exception as e:
@@ -80,12 +80,12 @@ except Exception as e:
 library(dscoder)
 
 # Initialize the agent
-agent <- AgenteIA(provider="anthropic")
+agent <- Dscoder(provider="anthropic")
 
 # Generate statistical analysis code
-codigo <- gerar_codigo(
-    descricao="Create R code to calculate mean and standard deviation",
-    linguagem="r"
+codigo <- agent$generate_code(
+    description="Create R code to calculate mean and standard deviation",
+    language="r"
 )
 eval(parse(text=codigo))
 ```
@@ -95,25 +95,25 @@ eval(parse(text=codigo))
 using dscoder
 
 # Initialize the agent
-agent = AgenteIA(provider="deepseek")
+agent = Dscoder(provider="deepseek")
 
 # Generate numerical computation code
-codigo = gerar_codigo(
-    descricao="Implement Newton-Raphson method in Julia",
-    linguagem="julia"
+codigo = agent.generate_code(
+    description="Implement Newton-Raphson method in Julia",
+    language="julia"
 )
 eval(Meta.parse(codigo))
 ```
 
 ### C++
 ```cpp
-#include <dscoder>
+#include <dscoder.hpp>
 
 int main() {
-    AgenteIA agent("openai");
+    Dscoder agent("openai");
     
     // Generate data structure implementation
-    std::string codigo = agent.gerar_codigo(
+    std::string codigo = agent.generate_code(
         "Implement a binary tree in C++",
         "cpp"
     );
