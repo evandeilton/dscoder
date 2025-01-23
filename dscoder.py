@@ -347,6 +347,7 @@ class AIAgent:
                     "- Code MUST be self-contained with NO external dependencies\n"
                     "- EVERY function used MUST have its complete implementation\n"
                     "- Use ``` markers at the beginning and end of code blocks\n\n"
+                    "- Install missing/dependent libraries"
                     
                     "2. LANGUAGE-SPECIFIC REQUIREMENTS:\n"
                     "C++:\n"
@@ -385,7 +386,7 @@ class AIAgent:
                     "4. Validate completeness\n\n"
                     
                     "IMPORTANT: Generated code MUST be completely functional without external implementations. "
-                    "ALL mentioned or used functions MUST be implemented in the same code block. "
+                    "ALL mentioned or used functions MUST be fully implemented in the same code block. "
                     "For C++, use EXCLUSIVELY STL native resources."
                 )
             }
@@ -669,7 +670,7 @@ def main():
     parser.add_argument(
         "--provider",
         type=str,
-        default="openai",
+        default="deepseek",
         choices=["openai", "anthropic","deepseek"],
         help="LLM provider to use."
     )
