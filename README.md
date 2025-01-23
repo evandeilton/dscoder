@@ -28,12 +28,12 @@ agent = AIAgent(
 ```
 
 ### LLMClient 
-Manages provider interactions:
+Manages provider interactions with support for OpenAI, Anthropic and DeepSeek:
 ```python
 from dscoder import LLMClient
 
 client = LLMClient(provider="openai")
-client.switch_provider("anthropic")  # Switch providers
+client.switch_provider("deepseek")  # Switch providers
 ```
 
 ### Code Generation
@@ -192,6 +192,27 @@ agent.llm_client.switch_provider("openai")
 ```python
 agent.log("Custom message", level="info", force=True)
 ```
+
+### DeepSeek Provider Details
+
+1. Configuration:
+```bash
+# .env file
+DEEPSEEK_API_KEY=your_api_key
+```
+
+2. Usage Example:
+```python
+agent = AIAgent(provider="deepseek")
+code = agent.generate_code(
+    description="Implement a neural network in Python",
+    language="python"
+)
+```
+
+3. Supported Models:
+- deepseek-chat (default)
+- deepseek-coder
 
 ### Best Practices
 
