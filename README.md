@@ -11,7 +11,7 @@ Advanced code generation system for data science and statistical computing, with
 ```bash
 git clone https://github.com/evandeilton/dscoder.git
 cd dscoder
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate  # or .\venv\Scripts\Activate.ps1 on Windows
 pip install -r requirements.txt
 ```
