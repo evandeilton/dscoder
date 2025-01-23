@@ -1,4 +1,20 @@
-# dscoder Examples
+# dscoder - AI Code Generation for Data Science
+
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue)]()
+[![Coverage](https://coveralls.io/repos/github/evandeilton/dscoder/badge.svg)]()
+
+Advanced code generation system for data science and statistical computing, with support for Python, R, Julia, C++, and Rcpp.
+
+## Installation
+
+```bash
+git clone https://github.com/evandeilton/dscoder.git
+cd dscoder
+python -m venv venv
+source venv/bin/activate  # or .\venv\Scripts\Activate.ps1 on Windows
+pip install -r requirements.txt
+```
 
 ## Jupyter Notebook Usage
 
