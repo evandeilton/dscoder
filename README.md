@@ -20,8 +20,8 @@ pip install -r requirements.txt
 
 ### Basic Setup
 ```python
-import sys
-sys.path.append("path/to/dscoder")
+# import sys
+# sys.path.append("path/to/dscoder")
 from dscoder import AIAgent
 
 # Initialize with DeepSeek (default)
