@@ -10,27 +10,27 @@
 - [Installation](#installation)
 - [Usage](#usage)
   - [Jupyter Notebook](#jupyter-notebook-usage)
-    - [Basic Setup](#basic-setup)
+    <!-- - [Basic Setup](#basic-setup)
     - [Language-Specific Examples](#language-specific-examples)
       - [Python](#python-examples)
       - [R](#r-examples)
       - [Julia](#julia-examples)
-      - [C++](#cpp-examples)
+      - [C++](#cpp-examples) -->
   - [Terminal](#terminal-usage)
-    - [Python Scripts](#python-script-examples)
+    <!-- - [Python Scripts](#python-script-examples)
     - [Provider Configuration](#provider-examples)
     - [Advanced Usage](#advanced-examples)
-    - [Command Line Interface](#command-line-interface)
+    - [Command Line Interface](#command-line-interface) -->
 - [Common Patterns](#common-patterns)
   - [Data Science Pipeline](#data-science-pipeline)
   - [Statistical Analysis](#statistical-analysis)
 - [FAQ](#faq)
-  - [API Key Setup](#key-setup)
+  <!-- - [API Key Setup](#key-setup)
   - [General Usage](#usage)
   - [Troubleshooting](#common-issues)
   - [Features](#features-1)
   - [Examples](#examples)
-  - [Support](#support)
+  - [Support](#support) -->
 - [License](#license)
 
 ## Features
