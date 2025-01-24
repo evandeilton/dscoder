@@ -422,7 +422,7 @@ output/
 Yes, specify the language using the `language` parameter:
 
 ```python
-# Available languages: python, r, julia, cpp, rcpp
+# Available languages: python, r, julia, cpp
 code = agent.generate_code(
     description="Sort array",
     language="python"
