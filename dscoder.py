@@ -657,32 +657,73 @@ def dscoder(
     expected_output: Optional[str] = None,
 ) -> Optional[str]:
     """
-    Core function for generating code using AI models.
+    Core function for generating code using AI models. This function provides a programmatic
+    interface for the dscoder code generation capabilities.
     
     Args:
-        description: Description of the code to be generated
-        language: Target programming language (default: "python")
-        provider: LLM provider to use (default: "deepseek")
-        model: Specific model to use (optional)
-        trace: Enable detailed logging (default: False)
-        timeout: Global timeout in seconds (default: 120)
-        max_attempts: Maximum generation attempts (default: 5)
-        expected_output: Expected output for validation (optional)
+        description: Detailed description of the code to be generated. Should include:
+                    - Required functionality
+                    - Input/output specifications
+                    - Any special requirements or constraints
+        language: Target programming language. Supported options:
+                 - "python" (default)
+                 - "cpp" (C++)
+                 - "r" (R)
+                 - "julia"
+                 - "rcpp" (Rcpp)
+        provider: LLM provider to use. Supported options:
+                 - "deepseek" (default)
+                 - "openai"
+                 - "anthropic"
+        model: Specific model to use. If not provided, uses provider's default model.
+               See README.md for supported models per provider.
+        trace: Enable detailed logging and debugging output (default: False)
+        timeout: Global timeout in seconds for code generation (default: 120)
+        max_attempts: Maximum number of generation attempts (default: 5)
+        expected_output: Expected output string for validation (optional). If provided,
+                       the generated code will be executed and its output compared
+                       against this value.
         
     Returns:
         Generated code as string if successful, None otherwise
         
     Raises:
         ValueError: For invalid input parameters
-        RuntimeError: For execution failures
+        RuntimeError: For execution failures or timeout
         
-    Example:
+    Examples:
+        Basic Python example:
         >>> code = dscoder(
         ...     description="Create a function to calculate factorial",
         ...     language="python",
         ...     expected_output="120"
         ... )
-        >>> print(code)
+        
+        C++ example with custom model:
+        >>> code = dscoder(
+        ...     description="Implement a linked list class",
+        ...     language="cpp",
+        ...     provider="openai",
+        ...     model="gpt-4-turbo"
+        ... )
+        
+        R example with tracing:
+        >>> code = dscoder(
+        ...     description="Create a function to calculate linear regression",
+        ...     language="r",
+        ...     trace=True
+        ... )
+        
+    Notes:
+        - For API key setup and configuration, see README.md
+        - For troubleshooting and common patterns, see README.md
+        - Code generation may take multiple attempts to produce valid results
+        - Execution timeout includes both generation and validation time
+        - Generated code is automatically validated when expected_output is provided
+        
+    See Also:
+        main(): Command-line interface for dscoder
+        AIAgent: Core implementation class
     """
     try:
         agent = AIAgent(provider=provider, trace=trace)

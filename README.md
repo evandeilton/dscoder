@@ -1,4 +1,409 @@
-# dscoder - AI Code Generation for Data Science
+# DSCoder - Advanced AI-Powered Code Generation for Data Science
+
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Python](https://img.shields.io/badge/python-3.8%2B-blue)]() [![Coverage](https://coveralls.io/repos/github/evandeilton/dscoder/badge.svg)]()
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Core Features](#core-features)
+- [Installation and Setup](#installation-and-setup)
+- [System Architecture](#system-architecture)
+- [Function Reference](#function-reference)
+- [Language Support](#language-support)
+- [Provider Details](#provider-details)
+- [Examples and Use Cases](#examples-and-use-cases)
+- [Troubleshooting](#troubleshooting)
+- [Best Practices](#best-practices)
+- [License and Credits](#license-and-credits)
+
+## Introduction
+
+DSCoder is an advanced AI-powered code generation system specifically designed for data science and statistical computing applications. Through its core `dscoder()` function, it provides seamless access to multiple LLM providers and supports various programming languages, helping data scientists and researchers generate high-quality, production-ready code.
+
+![dscoder in action](assets/peek-dscoder-ex-01.gif)
+
+## Core Features
+
+### Supported Programming Languages
+
+| Language | Primary Use Cases | Key Features | Best For |
+|----------|------------------|--------------|-----------|
+| Python | Data Science, ML | Package integration, Data processing | General data analysis |
+| R/Rcpp | Statistical Computing | Statistical analysis, High-performance computing | Statistical research |
+| Julia | Scientific Computing | Numerical computing, Optimization | Mathematical modeling |
+| C++ | Performance Computing | STL optimization, Memory management | System-level operations |
+
+### Provider Integration
+
+| Provider | Default Model | Alternative Models | Key Strengths |
+|----------|---------------|-------------------|---------------|
+| DeepSeek | deepseek-chat | deepseek-reasoner | Cost-effective, Fast responses |
+| OpenAI | gpt-4 | gpt-4-turbo, o1-mini | Advanced understanding |
+| Anthropic | claude-3-5-sonnet-20241022 | claude-3-opus-20240229, claude-3-5-haiku-20241022 | Complex reasoning |
+
+## Installation and Setup
+
+### Prerequisites
+- Python 3.8 or higher
+- Git
+- Virtual environment tool (venv recommended)
+- Access to LLM provider APIs
+
+### Installation Steps
+
+```bash
+# Clone the repository
+git clone https://github.com/evandeilton/dscoder.git
+
+# Navigate to project directory
+cd dscoder
+
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: .\venv\Scripts\Activate.ps1
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### API Configuration (Not provided)
+
+To configure API keys as environment variables:
+
+| Platform | Configuration Method | Command |
+|----------|---------------------|---------|
+| Linux/macOS | Add to ~/.bashrc or ~/.zshrc | `export PROVIDER_API_KEY="your_key"` |
+| Windows | Set user environment variables | `setx PROVIDER_API_KEY "your_key"` |
+
+Supprted API keys. You can set up your favorite ones:
+- DEEPSEEK_API_KEY
+- OPENAI_API_KEY
+- ANTHROPIC_API_KEY
+
+## Function Reference
+
+### The dscoder() Function
+
+The primary interface for code generation is the `dscoder()` function:
+
+```python
+from dscoder import dscoder
+
+code = dscoder(
+    description="Your code description",
+    language="python",
+    provider="deepseek",
+    model=None,
+    trace=False,
+    timeout=120,
+    max_attempts=5,
+    expected_output=None
+)
+```
+
+#### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| description | str | Required | Detailed requirements for code generation |
+| language | str | "python" | Target programming language |
+| provider | str | "deepseek" | LLM provider selection |
+| model | str | None | Specific model to use |
+| trace | bool | False | Enable detailed logging |
+| timeout | int | 120 | Global timeout in seconds |
+| max_attempts | int | 5 | Maximum retry attempts |
+| expected_output | str | None | Expected output for validation |
+
+## Examples and Use Cases
+
+### Data Science Examples
+
+Data Processing Pipeline:
+```python
+code = dscoder(
+    description="""
+    Create a data processing pipeline that:
+    1. Reads data from multiple CSV files
+    2. Performs data cleaning and transformation
+    3. Applies feature engineering
+    4. Implements data validation checks
+    5. Exports processed dataset
+    """,
+    language="python",
+    provider="deepseek"
+)
+```
+
+### Statistical Analysis Examples
+
+Advanced Statistics in R:
+```python
+code = dscoder(
+    description="""
+    Develop an R script that:
+    1. Performs comprehensive statistical analysis
+    2. Implements hypothesis testing
+    3. Generates visualization using ggplot2
+    4. Calculates effect sizes and power
+    5. Exports results to a report
+    """,
+    language="r",
+    provider="anthropic",
+    model="claude-3-opus-20240229"
+)
+```
+
+### Scientific Computing Examples
+
+Numerical Computing in Julia:
+```python
+code = dscoder(
+    description="""
+    Create a Julia module that:
+    1. Implements differential equation solvers
+    2. Provides error estimation
+    3. Optimizes performance with parallel processing
+    4. Generates solution visualizations
+    5. Exports results to HDF5
+    """,
+    language="julia"
+)
+```
+
+## Best Practices
+
+### Effective Prompt Engineering
+
+| Aspect | Guidelines | Example |
+|--------|------------|---------|
+| Clarity | Be specific and detailed | "Implement a function that calculates moving averages with customizable window size" |
+| Structure | Break down complex requirements | "1. Input validation, 2. Computation, 3. Error handling" |
+| Constraints | Specify limitations | "Must handle missing values and outliers" |
+| Output | Define expected results | "Return a DataFrame with original and averaged values" |
+
+### Performance Optimization
+
+| Category | Technique | Description |
+|----------|-----------|-------------|
+| Token Usage | Precise prompts | Clear, concise descriptions |
+| Runtime | Parallel processing | Enable parallel execution when available |
+| Memory | Resource management | Optimize memory usage patterns |
+| Caching | Response caching | Store frequently used responses |
+
+## Command Line Interface Usage
+
+DSCoder provides a powerful command-line interface through its `main()` function, allowing you to generate code directly from your terminal. This section covers all available parameters and provides comprehensive examples for both Linux and Windows environments.
+
+### Basic Command Structure
+
+The basic structure for running DSCoder from the terminal is:
+
+```bash
+python -m dscoder "description" [optional parameters]
+```
+
+### Available Parameters
+
+| Parameter | Flag | Type | Default | Description |
+|-----------|------|------|---------|-------------|
+| description | (required) | str | N/A | Code description (in quotes) |
+| language | --language | str | python | Target programming language |
+| provider | --provider | str | deepseek | LLM provider to use |
+| model | --model | str | None | Specific model to use |
+| trace | --trace | flag | False | Enable detailed logging |
+| timeout | --timeout | int | 120 | Global timeout in seconds |
+| max_attempts | --max_attempts | int | 5 | Maximum retry attempts |
+| expected_output | --expected_output | str | None | Expected output for validation |
+
+### Terminal Examples
+
+Let's explore various command combinations for different scenarios:
+
+#### Basic Usage (Linux/macOS)
+
+Generate Python code with default settings:
+```bash
+python -m dscoder "Create a function to calculate the mean and standard deviation of a list of numbers"
+```
+
+#### Language Selection (Linux/macOS)
+
+Generate R code:
+```bash
+python -m dscoder "Implement a linear regression analysis function with diagnostic plots" \
+    --language r
+```
+
+Generate C++ code:
+```bash
+python -m dscoder "Create a template-based sorting algorithm implementation" \
+    --language cpp
+```
+
+Generate Julia code:
+```bash
+python -m dscoder "Implement a differential equation solver using Runge-Kutta method" \
+    --language julia
+```
+
+#### Provider and Model Selection (Linux/macOS)
+
+Using OpenAI with a specific model:
+```bash
+python -m dscoder "Build a neural network classifier" \
+    --provider openai \
+    --model gpt-4-turbo
+```
+
+Using Anthropic with an advanced model:
+```bash
+python -m dscoder "Create a data preprocessing pipeline" \
+    --provider anthropic \
+    --model claude-3-opus-20240229
+```
+
+Using DeepSeek with the reasoning model:
+```bash
+python -m dscoder "Implement a graph traversal algorithm" \
+    --provider deepseek \
+    --model deepseek-reasoner
+```
+
+#### Advanced Parameters (Linux/macOS)
+
+Enable tracing and increase timeout:
+```bash
+python -m dscoder "Build a comprehensive data analysis framework" \
+    --trace \
+    --timeout 180
+```
+
+Set maximum attempts and expected output:
+```bash
+python -m dscoder "Create a function to sort a list in ascending order" \
+    --max_attempts 8 \
+    --expected_output "[1, 2, 3, 4, 5]"
+```
+
+#### Complex Examples (Linux/macOS)
+
+Comprehensive statistical analysis in R:
+```bash
+python -m dscoder "Create an R script for statistical analysis that includes:
+1. Data preprocessing with outlier detection
+2. Normality tests and distribution analysis
+3. ANOVA with post-hoc tests
+4. Generation of publication-ready plots
+5. Export results to a detailed report" \
+    --language r \
+    --provider anthropic \
+    --model claude-3-opus-20240229 \
+    --timeout 240 \
+    --trace
+```
+
+High-performance C++ implementation:
+```bash
+python -m dscoder "Implement a concurrent data structure that:
+1. Provides thread-safe operations
+2. Uses lock-free algorithms
+3. Includes comprehensive benchmarking
+4. Implements memory optimization
+5. Handles error cases gracefully" \
+    --language cpp \
+    --provider openai \
+    --model gpt-4-turbo \
+    --max_attempts 10 \
+    --trace
+```
+
+#### Windows Command Prompt Examples
+
+Basic usage in Windows:
+```cmd
+python -m dscoder "Create a function to calculate fibonacci sequence"
+```
+
+Complex parameters in Windows:
+```cmd
+python -m dscoder "Implement a machine learning pipeline" ^
+    --language python ^
+    --provider anthropic ^
+    --model claude-3-opus-20240229 ^
+    --timeout 180 ^
+    --trace
+```
+
+#### PowerShell Examples
+
+Basic usage in PowerShell:
+```powershell
+python -m dscoder "Create a function to calculate fibonacci sequence"
+```
+
+Complex parameters in PowerShell:
+```powershell
+python -m dscoder "Implement a machine learning pipeline" `
+    --language python `
+    --provider anthropic `
+    --model claude-3-opus-20240229 `
+    --timeout 180 `
+    --trace
+```
+
+## Troubleshooting Guide
+
+### Common Issues and Solutions
+
+| Issue | Possible Cause | Solution |
+|-------|---------------|----------|
+| Authentication Error | Invalid API key | Verify environment variables |
+| Generation Timeout | Complex request | Increase timeout parameter |
+| Validation Failure | Output mismatch | Check expected_output format |
+| Provider Error | Service unavailable | Switch to alternative provider |
+
+### Error Messages
+
+| Error Type | Description | Resolution |
+|------------|-------------|------------|
+| InvalidProviderError | Unsupported provider | Check provider parameter |
+| TimeoutError | Execution timeout | Increase timeout value |
+| ValidationError | Output validation failed | Review expected output |
+
+### Best Practices for Terminal Usage
+
+1. Quote Management:
+   - Always enclose the description in quotes
+   - Use single quotes for descriptions containing double quotes
+   - For Windows CMD, use double quotes and escape inner quotes if needed
+
+2. Line Continuation:
+   - Linux/macOS: Use backslash (\)
+   - Windows CMD: Use caret (^)
+   - PowerShell: Use backtick (`)
+
+3. Parameter Organization:
+   - Group related parameters together
+   - Place commonly changed parameters first
+   - Use line continuations for better readability
+
+4. Error Handling:
+   - Enable tracing for detailed error information
+   - Increase timeout for complex generations
+   - Set appropriate max_attempts for reliability
+
+## License and Credits
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Implementation inspired by [Canal Argonalyst](https://www.youtube.com/watch?v=hTc_uDx0zVI).
+
+---
+
+For additional support and updates, visit the project repository or submit issues through GitHub.
+
+
+<!-- # dscoder - AI Code Generation for Data Science
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Python](https://img.shields.io/badge/python-3.8%2B-blue)]() [![Coverage](https://coveralls.io/repos/github/evandeilton/dscoder/badge.svg)]()
 
@@ -476,579 +881,5 @@ print(code)
 This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgement
-
-[Canal Argonalyst](https://www.youtube.com/watch?v=hTc_uDx0zVI)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- # dscoder - AI Code Generation for Data Science
-
-
-
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Python](https://img.shields.io/badge/python-3.8%2B-blue)]() [![Coverage](https://coveralls.io/repos/github/evandeilton/dscoder/badge.svg)]()
-
-**dscoder** is an advanced AI-powered code generation system tailored for data science and statistical computing. It supports multiple programming languages, including Python, R, Julia, C++, and Rcpp, enabling seamless integration into your data workflows.
-
-![dscoder in action](assets/peek-dscoder-ex-01.gif)
-
-## Table of Contents
-
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Jupyter Notebook](#jupyter-notebook-usage)
-  - [Terminal](#terminal-usage)
-- [Common Patterns](#common-patterns)
-  - [Data Science Pipeline](#data-science-pipeline)
-  - [Statistical Analysis](#statistical-analysis)
-- [FAQ](#faq)
-- [License](#license)
-
-## Features
-
-- **Multi-Language Support**: Generate code in Python, R, Julia, C++, and Rcpp.
-- **Versatile Integration**: Compatible with Jupyter Notebooks and terminal environments.
-- **Multiple Providers**: Choose between DeepSeek (default), OpenAI, and Anthropic for code generation.
-- **Advanced Capabilities**:
-  - Output validation
-  - Error handling
-  - Metrics collection
-  - Customizable timeouts and attempts
-
-## Installation
-
-To install **dscoder**, follow these steps:
-
-```bash
-git clone https://github.com/evandeilton/dscoder.git
-cd dscoder
-python3 -m venv venv
-source venv/bin/activate  # On Windows: .\venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-```
-
-## Usage
-
-### Jupyter Notebook Usage
-
-#### Basic Setup
-
-Start by importing and initializing the `AIAgent`:
-
-```python
-# Import the AIAgent from dscoder
-from dscoder import AIAgent
-
-# Initialize with DeepSeek (default provider)
-agent = AIAgent()
-```
-
-#### Language-Specific Examples
-
-##### Python Examples
-
-**Data Analysis**
-
-```python
-code = agent.generate_code("""
-Create a function that:
-1. Reads a CSV file
-2. Handles missing values
-3. Calculates descriptive statistics
-4. Creates visualizations with seaborn
-""")
-```
-
-**Machine Learning**
-
-```python
-code = agent.generate_code("""
-Implement a RandomForest classifier with:
-1. Cross-validation
-2. Hyperparameter tuning
-3. Feature importance plot
-4. Confusion matrix
-""")
-```
-
-**Time Series**
-
-```python
-code = agent.generate_code("""
-Create an ARIMA model implementation:
-1. Data preprocessing
-2. Model selection
-3. Forecasting
-4. Accuracy metrics
-""")
-```
-
-##### R Examples
-
-**Statistical Analysis**
-
-```python
-code = agent.generate_code(
-    """
-    Create comprehensive statistical analysis:
-    1. Load and clean data
-    2. Normality tests
-    3. ANOVA
-    4. Post-hoc tests
-    5. Visualization
-    """,
-    language="r"
-)
-```
-
-**Mixed Models**
-
-```python
-code = agent.generate_code(
-    """
-    Implement a linear mixed model:
-    1. Random effects
-    2. Fixed effects
-    3. Model diagnostics
-    """,
-    language="r"
-)
-```
-
-##### Julia Examples
-
-**Numerical Computing**
-
-```python
-code = agent.generate_code(
-    """
-    Implement a differential equations solver:
-    1. Runge-Kutta method
-    2. Error estimation
-    3. Plotting solution
-    """,
-    language="julia"
-)
-```
-
-**Optimization**
-
-```python
-code = agent.generate_code(
-    """
-    Create an optimization algorithm:
-    1. Gradient descent
-    2. Convergence check
-    3. Visualization
-    """,
-    language="julia"
-)
-```
-
-##### C++ Examples
-
-**Data Structures**
-
-```python
-code = agent.generate_code(
-    """
-    Implement a Red-Black Tree:
-    1. Insertion
-    2. Deletion
-    3. Balancing
-    4. Search
-    """,
-    language="cpp"
-)
-```
-
-**Algorithms**
-
-```python
-code = agent.generate_code(
-    """
-    Create sorting algorithms:
-    1. QuickSort
-    2. MergeSort
-    3. Performance comparison
-    """,
-    language="cpp"
-)
-```
-
-### Terminal Usage
-
-#### Python Script Examples
-
-Create a Python script (e.g., `generate_ml.py`) to generate machine learning code:
-
-```python
-from dscoder import AIAgent
-
-def main():
-    agent = AIAgent(trace=True)
-    
-    code = agent.generate_code(
-        description="Implement gradient boosting classifier",
-        language="python",
-        expected_output="Classification report"
-    )
-    
-    if code:
-        print("Code generated successfully!")
-        print(code)
-
-if __name__ == "__main__":
-    main()
-```
-
-Run the script:
-
-```bash
-python generate_ml.py
-```
-
-#### Provider Examples
-
-Switch between different AI providers:
-
-```python
-# Using OpenAI
-agent = AIAgent(provider="openai")
-code = agent.generate_code("Implement PCA dimensionality reduction")
-
-# Using Anthropic
-agent = AIAgent(provider="anthropic")
-code = agent.generate_code("Create clustering algorithm")
-
-# Using DeepSeek (default)
-agent = AIAgent()  # or provider="deepseek"
-code = agent.generate_code("Build neural network classifier")
-```
-
-#### Advanced Examples
-
-**Custom Timeout**
-
-```python
-agent = AIAgent(timeout=180)
-```
-
-**Output Validation**
-
-```python
-code = agent.generate_code(
-    description="Sort numbers [5,2,8,1,9]",
-    expected_output="[1,2,5,8,9]"
-)
-```
-
-**Error Handling**
-
-```python
-try:
-    code = agent.generate_code(
-        description="Complex task",
-        max_attempts=10
-    )
-except Exception as e:
-    print(f"Error: {e}")
-```
-
-**Metrics Collection**
-
-```python
-agent.metrics_collector.display_metrics()
-```
-
-#### Command Line Interface
-
-Generate code directly from the terminal:
-
-```bash
-# Basic usage
-python -m dscoder "Create function to calculate correlation matrix"
-
-# Specify language
-python -m dscoder "Implement binary search tree" --language cpp
-
-# Enable tracing
-python -m dscoder "Statistical analysis" --trace
-
-# Set provider
-python -m dscoder "Machine learning model" --provider anthropic
-```
-
-## Common Patterns
-
-### Data Science Pipeline
-
-Streamline your data science workflow with these steps:
-
-```python
-# 1. Data Loading
-code = agent.generate_code("Load and preprocess CSV data")
-
-# 2. Feature Engineering
-code = agent.generate_code("Create feature engineering pipeline")
-
-# 3. Model Training
-code = agent.generate_code("Train ML model with cross-validation")
-
-# 4. Evaluation
-code = agent.generate_code("Generate model evaluation metrics")
-```
-
-### Statistical Analysis
-
-Conduct comprehensive statistical analyses:
-
-```python
-# 1. Descriptive Statistics
-code = agent.generate_code(
-    "Calculate comprehensive descriptive statistics",
-    language="r"
-)
-
-# 2. Hypothesis Testing
-code = agent.generate_code(
-    "Perform t-tests and chi-square tests",
-    language="r"
-)
-
-# 3. Visualization
-code = agent.generate_code(
-    "Create statistical visualizations",
-    language="r"
-)
-```
-
-## FAQ
-
-### API Key Setup and Models
-
-**Q: Where do I get API keys?**
-
-- **DeepSeek**: [platform.deepseek.com/api-keys](https://platform.deepseek.com/api-keys)
-- **OpenAI**: [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
-- **Anthropic**: [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys)
-
-**Q: How do I set up API keys?**
-
-To apply API keys on Linux and Windows:
-
-**Linux (local user)**
-```bash
-# Add to ~/.bashrc or ~/.zshrc
-echo 'export DEEPSEEK_API_KEY="your_key"' >> ~/.bashrc
-echo 'export OPENAI_API_KEY="your_key"' >> ~/.bashrc
-echo 'export ANTHROPIC_API_KEY="your_key"' >> ~/.bashrc
-
-# Apply changes
-source ~/.bashrc
-```
-
-**Windows (user environment variables)**
-```powershell
-
-# Command Prompt (run as user)
-setx DEEPSEEK_API_KEY "your_key"
-setx OPENAI_API_KEY "your_key"
-setx ANTHROPIC_API_KEY "your_key"
-```
-
-**Verify Keys**
-```python
-import os
-print(os.getenv('DEEPSEEK_API_KEY'))
-print(os.getenv('OPENAI_API_KEY'))
-print(os.getenv('ANTHROPIC_API_KEY'))
-```
-
-**Q: Where do I get model names to use?**
-
-- **DeepSeek**: `deepseek-chat` (default) and `deepseek-reasoner` (more expensive)
-
-For OpenAi and Anthropic unless you don't want ro read API documentation, you need first of all set the Keys and after that find out model names by command line.
-
-- **OpenAI**: you can list models by using in terminal
-
-```bash
-curl https://api.openai.com/v1/models \
-  -H "Authorization: Bearer $OPENAI_API_KEY"
-```
-
-- **Anthropic**: Same way as OpenAi
-
-```bash
-curl https://api.anthropic.com/v1/models \
-     --header "x-api-key: $ANTHROPIC_API_KEY" \
-     --header "anthropic-version: 2023-06-01"
-```
-
-### General Usage
-
-**Q: How do I generate basic code?**
-
-```python
-from dscoder import AIAgent
-
-agent = AIAgent()
-code = agent.generate_code("Calculate mean and standard deviation")
-print(code)
-```
-
-**Q: Where is my generated code saved?**
-
-Generated code is saved in the `output/` directory:
-
-```
-output/
-├── code_success_*.py  # Successfully generated code
-├── code_failure_*.py  # Failed attempts
-└── logs/              # Debug information
-```
-
-**Q: Can I specify the programming language?**
-
-Yes, specify the language using the `language` parameter:
-
-```python
-# Available languages: python, r, julia, cpp
-code = agent.generate_code(
-    description="Sort array",
-    language="python"
-)
-```
-
-### Troubleshooting
-
-**Q: Code generation fails?**
-
-- **Check API keys**: Ensure your API keys are correctly set in the `.env` file.
-- **Increase timeout**: Initialize the agent with a higher timeout.
-  ```python
-  agent = AIAgent(timeout=180)
-  ```
-- **Enable tracing**: Activate tracing to get detailed logs.
-  ```python
-  agent = AIAgent(trace=True)
-  ```
-- **Check logs**: Review logs in the `output/logs/` directory for more information.
-
-**Q: How do I handle timeouts?**
-
-Configure timeout settings and maximum attempts:
-
-```python
-agent = AIAgent(
-    timeout=180,
-    max_attempts=10
-)
-```
-
-**Q: Provider not responding?**
-
-Switch to a different AI provider:
-
-```python
-# Switch to OpenAI
-agent.llm_client.switch_provider("openai")
-```
-
-### Features
-
-**Q: What languages are supported?**
-
-- **Python (`python`)**: Ideal for data science and machine learning.
-- **R/Rcpp (`r`)**: Perfect for statistical analysis.
-- **Julia (`julia`)**: Suitable for numerical computing.
-- **C++ (`cpp`)**: Best for performance-critical applications.
-
-**Q: Can I validate outputs?**
-
-Yes, specify the expected output to validate the generated code:
-
-```python
-code = agent.generate_code(
-    description="Sort [5,1,3]",
-    expected_output="[1,3,5]"
-)
-```
-
-**Q: How do I monitor usage?**
-
-Display collected metrics using:
-
-```python
-agent.metrics_collector.display_metrics()
-```
-
-### Examples
-
-**Q: How do I generate ML code?**
-
-```python
-code = agent.generate_code("""
-1. Load iris dataset
-2. Train RandomForest
-3. Print accuracy
-""")
-print(code)
-```
-
-**Q: Statistical analysis in R?**
-
-```python
-code = agent.generate_code(
-    """
-    1. Load mtcars dataset
-    2. Run ANOVA
-    3. Plot results
-    """,
-    language="r"
-)
-print(code)
-```
-
-**Q: Numerical computing in Julia?**
-
-```python
-code = agent.generate_code(
-    "Implement gradient descent",
-    language="julia"
-)
-print(code)
-```
-
-### Support
-
-**Q: Where do I get help?**
-
-- **Issues**: [github.com/evandeilton/dscoder/issues](https://github.com/evandeilton/dscoder/issues)
-- **Documentation**: [github.com/evandeilton/dscoder/docs](https://github.com/evandeilton/dscoder/docs)
-- **API Documentation**:
-  - **DeepSeek**: [platform.deepseek.com/docs](https://platform.deepseek.com/docs)
-  - **OpenAI**: [platform.openai.com/docs](https://platform.openai.com/docs)
-  - **Anthropic**: [docs.anthropic.com/claude](https://docs.anthropic.com/claude)
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-# Acknowledgement
 
 [Canal Argonalyst](https://www.youtube.com/watch?v=hTc_uDx0zVI) -->

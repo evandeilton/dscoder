@@ -8,7 +8,7 @@ with open("requirements.txt", "r", encoding="utf-8") as f:
 
 setup(
     name="dscoder",
-    version="0.1.2",
+    version="0.1.3",
     author="José Lopes",
     author_email="evandeilton@example.com",
     description="dscoder - AI Code Generation Agent For Data Science Programming",
