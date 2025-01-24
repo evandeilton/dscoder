@@ -364,12 +364,34 @@ code = agent.generate_code(
 
 **Q: How do I set up API keys?**
 
-Create a `.env` file in the project root with the following content:
+To apply API keys on Linux and Windows:
 
+**Linux (local user)**
 ```bash
-DEEPSEEK_API_KEY=your_key
-OPENAI_API_KEY=your_key
-ANTHROPIC_API_KEY=your_key
+# Add to ~/.bashrc or ~/.zshrc
+echo 'export DEEPSEEK_API_KEY="your_key"' >> ~/.bashrc
+echo 'export OPENAI_API_KEY="your_key"' >> ~/.bashrc
+echo 'export ANTHROPIC_API_KEY="your_key"' >> ~/.bashrc
+
+# Apply changes
+source ~/.bashrc
+```
+
+**Windows (user environment variables)**
+```powershell
+
+# Command Prompt (run as user)
+setx DEEPSEEK_API_KEY "your_key"
+setx OPENAI_API_KEY "your_key"
+setx ANTHROPIC_API_KEY "your_key"
+```
+
+**Verify Keys**
+```python
+import os
+print(os.getenv('DEEPSEEK_API_KEY'))
+print(os.getenv('OPENAI_API_KEY'))
+print(os.getenv('ANTHROPIC_API_KEY'))
 ```
 
 ### General Usage
