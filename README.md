@@ -266,9 +266,9 @@ code = agent.generate_code(
 ```
 
 
-# dscoder FAQ
+# FAQ
 
-## Setup & Installation
+## KEY Setup
 
 **Q: Where do I get API keys?**
 - DeepSeek: platform.deepseek.com/api-keys
