@@ -4,7 +4,7 @@
 
 **dscoder** is an advanced AI-powered code generation system tailored for data science and statistical computing. It supports multiple programming languages, including Python, R, Julia, C++, and Rcpp, enabling seamless integration into your data workflows.
 
-![Demonstração do dscoder em ação](assets/peek-dscoder-ex-01.gif)
+![dscoder in action](assets/peek-dscoder-ex-01.gif)
 
 ## Table of Contents
 
