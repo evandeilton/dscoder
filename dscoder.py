@@ -781,6 +781,12 @@ def main():
         help="Specific model of the provider to use.",
         default=None
     )
+    parser.add_argument(
+        "--max_attempts",
+        type=int,
+        help="Specific max_attempts.",
+        default=5
+    )
     
     args = parser.parse_args()
     
@@ -792,7 +798,8 @@ def main():
             provider=args.provider,
             trace=args.trace,
             timeout=args.timeout,
-            model=args.model
+            model=args.model,
+            max_attempts = args.max_attempts
         )
         
         if generated_code:
