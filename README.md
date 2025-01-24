@@ -63,9 +63,9 @@ agent = AIAgent()
 | Parameter          | Type             | Default                | Description                                                                 | Used In                   |
 |--------------------|------------------|------------------------|-----------------------------------------------------------------------------|---------------------------|
 | `description`      | `str`            | **Required**           | Description of the code to be generated.                                    | `generate_code()`, `main()` |
+| `language`         | `str`            | `"python"`             | Programming language for the generated code (`"python"`, `"r"`, `"julia"`, `"cpp"`, `"rcpp"`). | `generate_code()`, `main()` |
 | `provider`         | `str`            | `"deepseek"`           | AI provider to use (`"deepseek"`, `"openai"`, `"anthropic"`).              | `AIAgent`, `main()`       |
 | `model`            | `str`            | `"deepseek-chat"`      | Specific model to use for the chosen AI provider. If not specified, defaults are used. | `main()` |
-| `language`         | `str`            | `"python"`             | Programming language for the generated code (`"python"`, `"r"`, `"julia"`, `"cpp"`, `"rcpp"`). | `generate_code()`, `main()` |
 | `trace`            | `bool`           | `False`                | Enable detailed logging and tracing of operations.                          | `AIAgent`, `main()`       |
 | `timeout`          | `int`            | `120`                  | Global timeout in seconds for code generation and execution.               | `generate_code()`, `main()` |
 | `max_attempts`     | `int`            | `5`                    | Maximum number of attempts for code generation retries.                     | `main()`, `generate_code()` |

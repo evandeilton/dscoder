@@ -646,6 +646,55 @@ class AIAgent:
         return None
 
 
+def dscoder(
+    description: str,
+    language: str = "python",
+    provider: str = "deepseek",
+    model: Optional[str] = None,    
+    trace: bool = False,
+    timeout: int = 120,
+    max_attempts: int = 5,
+    expected_output: Optional[str] = None,
+) -> Optional[str]:
+    """
+    Core function for generating code using AI models.
+    
+    Args:
+        description: Description of the code to be generated
+        language: Target programming language (default: "python")
+        provider: LLM provider to use (default: "deepseek")
+        model: Specific model to use (optional)
+        trace: Enable detailed logging (default: False)
+        timeout: Global timeout in seconds (default: 120)
+        max_attempts: Maximum generation attempts (default: 5)
+        expected_output: Expected output for validation (optional)
+        
+    Returns:
+        Generated code as string if successful, None otherwise
+        
+    Raises:
+        ValueError: For invalid input parameters
+        RuntimeError: For execution failures
+        
+    Example:
+        >>> code = dscoder(
+        ...     description="Create a function to calculate factorial",
+        ...     language="python",
+        ...     expected_output="120"
+        ... )
+        >>> print(code)
+    """
+    try:
+        agent = AIAgent(provider=provider, trace=trace)
+        return agent.generate_code(
+            description=description,
+            language=language,
+            expected_output=expected_output,
+            max_attempts=max_attempts
+        )
+    except Exception as e:
+        raise RuntimeError(f"Code generation failed: {str(e)}") from e
+
 def main():
     """Main function for command-line execution"""
     parser = ArgumentParser(description="AI Agent for code generation.")
@@ -695,15 +744,19 @@ def main():
     args = parser.parse_args()
     
     try:
-        agent = AIAgent(provider=args.provider, trace=args.trace)
-        generated_code = agent.generate_code(
+        generated_code = dscoder(
             description=args.description,
             language=args.language,
-            expected_output=args.expected_output
+            expected_output=args.expected_output,
+            provider=args.provider,
+            trace=args.trace,
+            timeout=args.timeout,
+            model=args.model
         )
         
         if generated_code:
             print("\nCode generation completed successfully!")
+            print(generated_code)
         else:
             print("\nCode generation failed. Please check the logs for more details.")
             exit(1)
