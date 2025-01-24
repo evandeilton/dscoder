@@ -264,3 +264,142 @@ code = agent.generate_code(
     language="r"
 )
 ```
+
+
+# dscoder FAQ
+
+## Setup & Installation
+
+**Q: Where do I get API keys?**
+- DeepSeek: platform.deepseek.com/api-keys
+- OpenAI: platform.openai.com/api-keys
+- Anthropic: console.anthropic.com/settings/keys
+
+**Q: How do I set up API keys?**
+Create `.env` file:
+```bash
+DEEPSEEK_API_KEY=your_key
+OPENAI_API_KEY=your_key
+ANTHROPIC_API_KEY=your_key
+```
+
+**Q: Which provider should I use?**
+- DeepSeek (default): General purpose
+- OpenAI: Best for Python/ML
+- Anthropic: Strong in several coding tasks
+
+## Usage
+
+**Q: How do I generate basic code?**
+```python
+from dscoder import AIAgent
+agent = AIAgent()
+code = agent.generate_code("Calculate mean and std dev")
+```
+
+**Q: Where is my generated code saved?**
+```
+output/
+├── code_success_*.py  # Working code
+├── code_failure_*.py  # Failed attempts
+└── logs/              # Debug info
+```
+
+**Q: How do I debug failures?**
+```python
+agent = AIAgent(trace=True)
+agent.metrics_collector.display_metrics()
+```
+
+**Q: Can I specify the programming language?**
+```python
+# Available: python, r, julia, cpp, rcpp
+code = agent.generate_code(
+    description="Sort array",
+    language="python"
+)
+```
+
+## Common Issues
+
+**Q: Code generation fails?**
+- Check API keys
+- Increase timeout: `agent = AIAgent(timeout=180)`
+- Enable tracing: `trace=True`
+- Check logs in `output/logs/`
+
+**Q: How do I handle timeouts?**
+```python
+agent = AIAgent(
+    timeout=180,
+    max_attempts=10
+)
+```
+
+**Q: Provider not responding?**
+```python
+# Switch providers
+agent.llm_client.switch_provider("openai")
+```
+
+## Features
+
+**Q: What languages are supported?**
+- Python (`python`): Data science/ML
+- R/Rcpp (`r`): Statistics
+- Julia (`julia`): Numerical computing
+- C++ (`cpp`): Performance computing
+
+**Q: Can I validate outputs?**
+```python
+code = agent.generate_code(
+    description="Sort [5,1,3]",
+    expected_output="[1,3,5]"
+)
+```
+
+**Q: How do I monitor usage?**
+```python
+agent.metrics_collector.display_metrics()
+```
+
+## Examples
+
+**Q: How do I generate ML code?**
+```python
+code = agent.generate_code("""
+1. Load iris dataset
+2. Train RandomForest
+3. Print accuracy
+""")
+```
+
+**Q: Statistical analysis in R?**
+```python
+code = agent.generate_code(
+    """
+    1. Load mtcars
+    2. Run ANOVA
+    3. Plot results
+    """,
+    language="r"
+)
+```
+
+**Q: Numerical computing in Julia?**
+```python
+code = agent.generate_code(
+    "Implement gradient descent",
+    language="julia"
+)
+```
+
+## Support
+
+**Q: Where do I get help?**
+- Issues: github.com/evandeilton/dscoder/issues
+- Docs: github.com/evandeilton/dscoder/docs
+- API Docs:
+  - DeepSeek: platform.deepseek.com/docs
+  - OpenAI: platform.openai.com/docs
+  - Anthropic: docs.anthropic.com/claude
