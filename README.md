@@ -289,33 +289,61 @@ python -m dscoder "Create a function to sort a list in ascending order" \
 
 Comprehensive statistical analysis in R:
 ```bash
-python -m dscoder "Create an R script for statistical analysis that includes:
+python -m dscoder "Create script for elegant statistical analysis that includes:
+0. A gracefully planed analysis pipeline with tidyverse and tidymodels
 1. Data preprocessing with outlier detection
-2. Normality tests and distribution analysis
-3. ANOVA with post-hoc tests
-4. Generation of publication-ready plots
-5. Export results to a detailed report" \
+2. Generation of publication-ready plots with ggplot2
+3. Preprocess variables: One hot encoding for textual (eg. char and factor), scale for numeric variables
+4. Training clasification model for creditability target (lightgbm, xgboost and Logistic regression)
+5. Cross-validation and fine tuning parameters. train 0.7 and test 0.3
+6. Add conditional check for missing packages/libraries, if some is missing, install before importing
+7. Use scorecard::germancredit as data." \
     --language r \
-    --provider anthropic \
-    --model claude-3-opus-20240229 \
+    # --provider anthropic \
+    # --model claude-3-opus-20240229 \
     --timeout 240 \
     --trace
 ```
+- Data Science Complex Pipeline
+```bash
+python -m dscoder "Create a comprehensive statistical analysis pipeline:
 
-High-performance C++ implementation:
+0. Check required libraries: data manipulation, ML frameworks, visualization, stats. If missing, install.
+1. Data import & validation: dimensions, types, missing values, quality, schema validation
+2. Initial cleaning: duplicates, missing values, data types, inconsistencies, outliers
+3. EDA: univariate, bivariate, target distribution, correlations, outliers, data drift
+4. Feature processing: encoding (categorical), scaling (numeric), interactions, dimensionality reduction
+5. Feature engineering: domain features, aggregations, selection, importance analysis
+6. Split data: train (70%), test (30%), stratified CV folds, temporal validation if needed
+7. Handle imbalance if target small class is <= 5%: distribution check, SMOTE/weights, validation
+8. Setup models: baseline, Logistic, LightGBM, XGBoost, stacking/ensemble
+9. Train & tune: CV optimization, early stopping, learning curves
+10. Evaluate: ROC-AUC, precision-recall, confusion matrix, statistical tests
+11. Interpret: importance, SHAP, PDP, error analysis, segment performance
+12. Quality checks: model stability, residual analysis, bias detection
+
+Use german credit data." \
+   --language python \
+   --timeout 240 \
+   --max_attempts 3
+```
+
+- High-performance C++ implementation:
 ```bash
 python -m dscoder "Implement a concurrent data structure that:
 1. Provides thread-safe operations
 2. Uses lock-free algorithms
 3. Includes comprehensive benchmarking
 4. Implements memory optimization
-5. Handles error cases gracefully" \
+5. Handles error cases gracefully
+6. You code mus be state of art. Fast for big data." \
     --language cpp \
     --provider openai \
-    --model gpt-4-turbo \
+    --model gpt-4o \
     --max_attempts 10 \
     --trace
 ```
+
 
 #### Windows Command Prompt Examples
 
