@@ -67,7 +67,7 @@ source venv/bin/activate  # On Windows: .\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
-### API Configuration (Not provided)
+### API Configuration (Not provided, see [Provider Details](#provider-details))
 
 To configure API keys as environment variables:
 
@@ -110,11 +110,11 @@ from dscoder import dscoder
 code = dscoder(
     description="Your code description",
     language="python",
-    provider="deepseek",
+    provider="openrouter",
     model=None,
     trace=False,
     timeout=120,
-    max_attempts=5,
+    max_attempts=10,
     expected_output=None
 )
 ```
@@ -148,7 +148,7 @@ code = dscoder(
     5. Exports processed dataset
     """,
     language="python",
-    provider="deepseek"
+    provider="openrouter"
 )
 ```
 
@@ -285,6 +285,13 @@ Using DeepSeek with the reasoning model:
 python -m dscoder "Implement a graph traversal algorithm" \
     --provider deepseek \
     --model deepseek-reasoner
+```
+
+Using OpenRouter with Gemini free model:
+```bash
+python -m dscoder "Implement a graph traversal algorithm" \
+    --provider openrouter \
+    --model "google/gemini-2.0-flash-001"
 ```
 
 #### Advanced Parameters (Linux/macOS)

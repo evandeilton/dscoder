@@ -26,6 +26,11 @@ from rich.logging import RichHandler
 from openai import OpenAI
 from anthropic import Anthropic
 
+from .llm_providers import (
+    LLMProvider, OpenAIProvider, AnthropicProvider, 
+    DeepSeekProvider, OpenRouterProvider, LLMResponse
+)
+
 class ErrorHandler:
     """System error handler"""
     
@@ -80,204 +85,20 @@ class MetricsCollector:
         
         console.print(table)
 
-@dataclass
-class LLMResponse:
-    """Class to standardize responses from different LLM providers"""
-    content: str
-    tokens_used: int
-    model: str
-    provider: str
-
-class LLMProvider(ABC):
-    """Abstract base class for LLM providers"""
-    
-    @abstractmethod
-    def initialize_client(self) -> None:
-        pass
-    
-    @abstractmethod
-    def generate_completion(
-        self,
-        messages: List[Dict[str, str]],
-        max_tokens: int,
-        temperature: float,
-        model: Optional[str] = None
-    ) -> LLMResponse:
-        pass
-
-class OpenAIProvider(LLMProvider):
-    """Provider for OpenAI"""
-    
-    def __init__(self):
-        self.client = None
-        self.default_model = "gpt-4"
-    
-    def initialize_client(self) -> None:
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
-            raise ValueError("OPENAI_API_KEY not found in environment variables")
-        self.client = OpenAI(api_key=api_key)
-    
-    def generate_completion(
-        self,
-        messages: List[Dict[str, str]],
-        max_tokens: int,
-        temperature: float,
-        model: Optional[str] = None
-    ) -> LLMResponse:
-        if not self.client:
-            self.initialize_client()
-            
-        response = self.client.chat.completions.create(
-            model=model or self.default_model,
-            messages=messages,
-            max_tokens=max_tokens,
-            temperature=temperature
-        )
-        
-        return LLMResponse(
-            content=response.choices[0].message.content,
-            tokens_used=response.usage.total_tokens,
-            model=model or self.default_model,
-            provider="openai"
-        )
-
-class AnthropicProvider(LLMProvider):
-    """Provider for Anthropic"""
-    
-    def __init__(self):
-        self.client = None
-        self.default_model = "claude-3-5-sonnet-20241022"
-    
-    def initialize_client(self) -> None:
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        if not api_key:
-            raise ValueError("ANTHROPIC_API_KEY not found in environment variables")
-        self.client = Anthropic(api_key=api_key)
-    
-    def _convert_messages(self, messages: List[Dict[str, str]]) -> List[Dict[str, str]]:
-        """Converts messages from OpenAI format to Anthropic format"""
-        converted = []
-        for msg in messages:
-            role = msg["role"]
-            content = msg["content"]
-            if role == "system":
-                converted.append({"role": "assistant", "content": content})
-            elif role in ["user", "assistant"]:
-                converted.append({"role": role, "content": content})
-            else:
-                logging.warning(f"Unsupported message type: {role}")
-        return converted
-    
-    def generate_completion(
-        self,
-        messages: List[Dict[str, str]],
-        max_tokens: int,
-        temperature: float,
-        model: Optional[str] = None
-    ) -> LLMResponse:
-        if not self.client:
-            self.initialize_client()
-            
-        anthropic_messages = self._convert_messages(messages)
-        
-        response = self.client.messages.create(
-            model=model or self.default_model,
-            messages=anthropic_messages,
-            max_tokens=max_tokens,
-            temperature=temperature
-        )
-        
-        return LLMResponse(
-            content=response.content[0].text,
-            tokens_used=response.usage.output_tokens + response.usage.input_tokens,
-            model=model or self.default_model,
-            provider="anthropic"
-        )
-
-class DeepSeekProvider(LLMProvider):
-    """
-    Provider for the DeepSeek API that uses the same interface as OpenAI.
-    
-    Attributes:
-        client: OpenAI client configured for the DeepSeek API
-        default_model: Default DeepSeek model to use
-        base_url: Base URL of the DeepSeek API
-    """
-    
-    def __init__(self):
-        self.client = None
-        self.default_model = "deepseek-chat"
-        self.base_url = "https://api.deepseek.com"
-    
-    def initialize_client(self) -> None:
-        """
-        Initializes the OpenAI client with DeepSeek configurations.
-        
-        Raises:
-            ValueError: If DEEPSEEK_API_KEY is not set in environment variables
-        """
-        api_key = os.getenv("DEEPSEEK_API_KEY")
-        if not api_key:
-            raise ValueError("DEEPSEEK_API_KEY not found in environment variables")
-            
-        self.client = OpenAI(
-            api_key=api_key,
-            base_url=self.base_url
-        )
-    
-    def generate_completion(
-        self,
-        messages: List[Dict[str, str]],
-        max_tokens: int,
-        temperature: float,
-        model: Optional[str] = None
-    ) -> LLMResponse:
-        """
-        Generates a completion using the DeepSeek API.
-        
-        Args:
-            messages: List of messages in OpenAI format
-            max_tokens: Maximum number of tokens in the response
-            temperature: Generation temperature (creativity)
-            model: Specific model to use (optional)
-            
-        Returns:
-            LLMResponse: Standardized response containing generated content and metadata
-            
-        Raises:
-            RuntimeError: If the client is not initialized
-        """
-        if not self.client:
-            self.initialize_client()
-            
-        response = self.client.chat.completions.create(
-            model=model or self.default_model,
-            messages=messages,
-            max_tokens=max_tokens,
-            temperature=temperature
-        )
-        
-        return LLMResponse(
-            content=response.choices[0].message.content,
-            tokens_used=response.usage.total_tokens,
-            model=model or self.default_model,
-            provider="deepseek"
-        )
-
 class LLMClient:
     """Generic client for LLMs that manages different providers"""
     
-    def __init__(self, provider: str = "openai"):
+    def __init__(self, provider: str = "openrouter"):
         load_dotenv()
         self.providers = {
             "openai": OpenAIProvider(),
             "anthropic": AnthropicProvider(),
-            "deepseek": DeepSeekProvider()
+            "deepseek": DeepSeekProvider(),
+            "openrouter": OpenRouterProvider()  # Add OpenRouter provider
         }
         
         if provider not in self.providers:
-            raise ValueError(f"Provider {provider} not supported")
+            raise ValueError(f"Provider {provider} not supported. Available providers: {', '.join(self.providers.keys())}")
             
         self.current_provider = self.providers[provider]
         self.current_provider.initialize_client()
@@ -453,7 +274,7 @@ class AIAgent:
             code_indicators = ['(', ')', '{', '}', '=', ':', ';', '#', '"', "'"]
             if not any(indicator in code for indicator in code_indicators):
                 return False
-                
+            
             # Checks if it looks like code from a supported language
             return detect_language(code) is not None
         
@@ -471,7 +292,7 @@ class AIAgent:
             # If language was specified in markdown, checks if it's supported
             if lang and lang.lower() not in language_patterns:
                 continue
-                
+            
             # Validates code block
             if validate_code_block(code):
                 valid_blocks.append(code)
@@ -555,7 +376,7 @@ class AIAgent:
             if (datetime.now() - start_execution).total_seconds() > 120:
                 self.log("Global timeout reached", "error", True)
                 break
-                
+            
             attempts += 1
             self.log(f"\n[Attempt {attempts}/{max_attempts}]", "info", False)
 
@@ -660,6 +481,12 @@ def dscoder(
     Core function for generating code using AI models. This function provides a programmatic
     interface for the dscoder code generation capabilities.
     
+    Available providers:
+    - openai: OpenAI API (GPT-3.5, GPT-4)
+    - anthropic: Anthropic API (Claude models)
+    - deepseek: DeepSeek API
+    - openrouter: OpenRouter API (access to multiple models)
+    
     Args:
         description: Detailed description of the code to be generated. Should include:
                     - Required functionality
@@ -675,6 +502,7 @@ def dscoder(
                  - "deepseek" (default)
                  - "openai"
                  - "anthropic"
+                 - "openrouter"
         model: Specific model to use. If not provided, uses provider's default model.
                See README.md for supported models per provider.
         trace: Enable detailed logging and debugging output (default: False)
@@ -760,8 +588,8 @@ def main():
     parser.add_argument(
         "--provider",
         type=str,
-        default="deepseek",
-        choices=["openai", "anthropic","deepseek"],
+        default="openrouter",
+        choices=["openai", "anthropic", "deepseek", "openrouter"],  # Add openrouter
         help="LLM provider to use."
     )
     parser.add_argument(
