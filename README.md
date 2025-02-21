@@ -45,9 +45,9 @@ Seja você um cientista de dados experiente procurando automatizar a geração d
 | Provedor   | Modelo Padrão | Modelos Alternativos | Pontos Fortes |
 |------------|---------------|---------------------|---------------|
 | DeepSeek   | deepseek-chat | deepseek-reasoner | Custo-benefício, Respostas rápidas |
-| OpenAI     | gpt-4        | gpt-4-turbo, o1-mini | Compreensão avançada |
+| OpenAI     | gpt-4o        | gpt-4o-mini, o1-mini, o3-mini| Compreensão avançada |
 | Anthropic  | claude-3-5-sonnet-20241022 | claude-3-opus-20240229, claude-3-5-haiku-20241022 | Raciocínio complexo |
-| OpenRouter | google/gemini-2.0-pro-exp-02-05:free | google/gemini-1.5 | Acesso a múltiplos modelos |
+| OpenRouter | google/gemini-2.0-pro-exp-02-05:free | vários | Acesso a múltiplos modelos |
 
 ## Instalação e Configuração
 

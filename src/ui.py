@@ -296,10 +296,28 @@ def main():
         )
         
         model_options = {
-            "openai": ["Padrão", "gpt-4", "gpt-3.5-turbo"],
-            "anthropic": ["Padrão", "claude-3-5-sonnet-20241022", "claude-instant-v1"],
+            "openai": ["Padrão", "gpt-4o","gpt-4o-mini","o1-mini","o3-mini"],
+            "anthropic": ["Padrão", "claude-3-5-haiku-latest", "claude-3-5-sonnet-latest"],
             "deepseek": ["Padrão", "deepseek-chat"],
-            "openrouter": ["Padrão", "google/gemini-2.0-pro-exp-02-05:free", "google/gemini-1.5"]
+            "openrouter": ["Padrão",
+                           "openai/o3-mini-high",
+                            "openai/o3-mini",
+                            "openai/chatgpt-4o-latest",
+                            "openai/gpt-4o-mini",
+                            "google/gemini-2.0-flash-001",
+                            "google/gemini-2.0-flash-thinking-exp:free",
+                            "google/gemini-2.0-flash-lite-preview-02-05:free",
+                            "google/gemini-2.0-pro-exp-02-05:free",
+                            "deepseek/deepseek-r1-distill-llama-70b:free",
+                            "deepseek/deepseek-r1-distill-qwen-32b",
+                            "deepseek/deepseek-r1:free",
+                            "qwen/qwen-plus",
+                            "qwen/qwen-max",
+                            "qwen/qwen-turbo",    
+                            "mistralai/codestral-2501",
+                            "anthropic/claude-3.5-haiku-20241022:beta",
+                            "anthropic/claude-3.5-sonnet"
+                            ]
         }
         
         model = st.selectbox(

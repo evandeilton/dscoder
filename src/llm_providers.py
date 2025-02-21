@@ -36,7 +36,7 @@ class OpenAIProvider(LLMProvider):
     
     def __init__(self):
         self.client = None
-        self.default_model = "gpt-4"
+        self.default_model = "gpt-4o"
     
     def initialize_client(self) -> None:
         api_key = os.getenv("OPENAI_API_KEY")
@@ -73,7 +73,7 @@ class AnthropicProvider(LLMProvider):
     
     def __init__(self):
         self.client = None
-        self.default_model = "claude-3-5-sonnet-20241022"
+        self.default_model = "claude-3-5-haiku-latest" #claude-3-5-haiku-20241022
     
     def initialize_client(self) -> None:
         api_key = os.getenv("ANTHROPIC_API_KEY")
