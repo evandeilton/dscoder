@@ -26,7 +26,7 @@ from rich.logging import RichHandler
 from openai import OpenAI
 from anthropic import Anthropic
 
-from .llm_providers import (
+from llm_providers import (
     LLMProvider, OpenAIProvider, AnthropicProvider, 
     DeepSeekProvider, OpenRouterProvider, LLMResponse
 )
