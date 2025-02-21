@@ -112,7 +112,7 @@ class LLMClient:
     def generate_completion(
         self,
         messages: List[Dict[str, str]],
-        max_tokens: int = 2500,
+        max_tokens: int = 5000,
         temperature: float = 0,
         model: Optional[str] = None
     ) -> LLMResponse:
@@ -457,14 +457,26 @@ class AIAgent:
                 last_version = previous_code if previous_code else None
 
         # Finalization after attempts or timeout
+        # self.log("Maximum attempts reached or timeout occurred.", "error", True)
+        # if last_version:
+        #     final_file_name = self.save_final_version(last_version, language, "failure")
+        #     self.log(f"Last code version saved at: {final_file_name}", "info", True)
+        
+        # if self.trace:
+        #     self.metrics_collector.display_metrics(self.console)
+        # return None
+            # Finalization after attempts or timeout
         self.log("Maximum attempts reached or timeout occurred.", "error", True)
         if last_version:
             final_file_name = self.save_final_version(last_version, language, "failure")
             self.log(f"Last code version saved at: {final_file_name}", "info", True)
-        
+
         if self.trace:
             self.metrics_collector.display_metrics(self.console)
-        return None
+        
+        # Retorna a última versão do código, mesmo que seja um fallback, se houver
+        return last_version if last_version else None
+
 
 
 def dscoder(
