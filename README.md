@@ -46,7 +46,7 @@ Seja você um cientista de dados experiente procurando automatizar a geração d
 |------------|---------------|---------------------|---------------|
 | DeepSeek   | deepseek-chat | deepseek-reasoner | Custo-benefício, Respostas rápidas |
 | OpenAI     | gpt-4o        | gpt-4o-mini, o1-mini, o3-mini| Compreensão avançada |
-| Anthropic  | claude-3-5-sonnet-20241022 | claude-3-opus-20240229, claude-3-5-haiku-20241022 | Raciocínio complexo |
+| Anthropic  | claude-3-5-haiku-latest | claude-3-opus-20240229, claude-3-5-haiku-20241022 | Raciocínio complexo |
 | OpenRouter | google/gemini-2.0-pro-exp-02-05:free | vários | Acesso a múltiplos modelos |
 
 ## Instalação e Configuração
@@ -163,3 +163,31 @@ code = dscoder(
 | timeout        | int  | 120 | Timeout global em segundos |
 | max_attempts   | int  | 5 | Número máximo de tentativas de retry |
 | expected_output | str | None | Saída esperada para validação |
+
+## Uso da Interface de Linha de Comando
+
+(Esta seção precisa ser atualizada com base na implementação CLI, se houver)
+
+## Exemplos e Casos de Uso
+
+(Esta seção precisa ser preenchida com exemplos práticos)
+
+## Melhores Práticas
+
+(Esta seção precisa ser preenchida com melhores práticas para usar o DSCoder)
+
+## Guia de Solução de Problemas
+
+(Esta seção precisa ser preenchida com dicas de solução de problemas comuns)
+
+## Diretrizes de Contribuição
+
+(Esta seção precisa ser preenchida com diretrizes para contribuição)
+
+## Licença e Créditos
+
+(Esta seção precisa ser preenchida com informações de licença e créditos)
+
+## Informações de Contato
+
+(Esta seção precisa ser preenchida com informações de contato)
