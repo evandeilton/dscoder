@@ -163,31 +163,3 @@ code = dscoder(
 | timeout        | int  | 120 | Timeout global em segundos |
 | max_attempts   | int  | 5 | Número máximo de tentativas de retry |
 | expected_output | str | None | Saída esperada para validação |
-
-## Uso da Interface de Linha de Comando
-
-(Esta seção precisa ser atualizada com base na implementação CLI, se houver)
-
-## Exemplos e Casos de Uso
-
-(Esta seção precisa ser preenchida com exemplos práticos)
-
-## Melhores Práticas
-
-(Esta seção precisa ser preenchida com melhores práticas para usar o DSCoder)
-
-## Guia de Solução de Problemas
-
-(Esta seção precisa ser preenchida com dicas de solução de problemas comuns)
-
-## Diretrizes de Contribuição
-
-(Esta seção precisa ser preenchida com diretrizes para contribuição)
-
-## Licença e Créditos
-
-(Esta seção precisa ser preenchida com informações de licença e créditos)
-
-## Informações de Contato
-
-(Esta seção precisa ser preenchida com informações de contato)
